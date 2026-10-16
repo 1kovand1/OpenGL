@@ -63,7 +63,7 @@ int WinMain()
 		return -1;
 	}
 
-	camera = std::make_unique<Camera>(window, (float)width / height, glm::vec3{ 0,0,25 }, glm::quatLookAt(glm::vec3 { 0, 0, 1  }, {1.,-1,0}));
+	camera = std::make_unique<Camera>(window, (float)width / height, glm::vec3{ 0,0,25 }, glm::quatLookAt(glm::vec3 { 0, 0, -1  }, {1.,-1,0}));
 
 	glViewport(0, 0, width, height);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);

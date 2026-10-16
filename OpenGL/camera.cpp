@@ -27,14 +27,14 @@ Camera& Camera::operator=(Camera&& other) noexcept
 
 void Camera::processInput(float dt) noexcept
 {
-	glm::vec3 forward = cameraDirection * glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 up = cameraDirection * glm::vec3(0.0f, -1.0f, 0.0f);
-	glm::vec3 right = cameraDirection * glm::vec3(-1.0f, 0.0f, 0.0f);
+	glm::vec3 forward = getForward();
+	glm::vec3 up = getUp();
+	glm::vec3 right = getRight();
 
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		cameraPos -= forward * (cameraSpeed * dt);
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		cameraPos += forward * (cameraSpeed * dt);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		cameraPos -= forward * (cameraSpeed * dt);
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		cameraPos -= right * (cameraSpeed * dt);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
@@ -90,7 +90,7 @@ glm::mat4 Camera::getCameraToWorldRotation() const noexcept
 
 glm::mat4 Camera::getCameraToWorldConversion() const noexcept
 {
-	return glm::translate(getCameraToWorldRotation(), -cameraPos);
+	return glm::translate(getCameraToWorldRotation(), cameraPos);
 }
 
 glm::mat4 Camera::getWorldToCameraRotation() const noexcept
@@ -100,7 +100,7 @@ glm::mat4 Camera::getWorldToCameraRotation() const noexcept
 
 glm::mat4 Camera::getWorldToCameraConversion() const noexcept
 {
-	return glm::translate(getWorldToCameraRotation(), cameraPos);
+	return glm::translate(getWorldToCameraRotation(), -cameraPos);
 }
 
 glm::mat4 Camera::getPerspective() const noexcept
